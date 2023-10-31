@@ -1,4 +1,4 @@
-<h1 align="left">Template Kotlin Library
+<h1 align="left">NewRelik
 <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/MyUNiDAYS/newrelik?style=flat-square"> <a href="https://git.live"><img src="https://img.shields.io/badge/collaborate-on%20gitlive-blueviolet?style=flat-square"></a>
 </h1>
 
