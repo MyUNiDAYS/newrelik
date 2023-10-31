@@ -1,8 +1,8 @@
 <h1 align="left">Template Kotlin Library
-<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/MyUNiDAYS/template-kotlin-library?style=flat-square"> <a href="https://git.live"><img src="https://img.shields.io/badge/collaborate-on%20gitlive-blueviolet?style=flat-square"></a>
+<img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/MyUNiDAYS/newrelik?style=flat-square"> <a href="https://git.live"><img src="https://img.shields.io/badge/collaborate-on%20gitlive-blueviolet?style=flat-square"></a>
 </h1>
 
-The Template Kotlin Library SDK
+NewRelik - A Kotlin Multiplatform wrapper of the NewRelic Mobile SDK
 
 ## Installation
 
