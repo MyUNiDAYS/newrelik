@@ -48,9 +48,6 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 }
 
 kotlin {
-    js(BOTH) {
-        browser { }
-    }
     @OptIn(ExperimentalKotlinGradlePluginApi::class)
     targetHierarchy.default()
     androidTarget {
@@ -73,8 +70,6 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val jsMain by getting
-        val jsTest by getting
         val androidMain by getting
         val androidUnitTest by getting {
             dependencies {
