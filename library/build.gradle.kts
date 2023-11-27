@@ -65,7 +65,6 @@ kotlin {
         pod("NewRelicAgent") {
             version = "7.4.7"
             moduleName = "NewRelic"
-            headers = "NewRelic.xcframework/ios-arm64/NewRelic.framework/Headers/NewRelic.h"
         }
     }
 
