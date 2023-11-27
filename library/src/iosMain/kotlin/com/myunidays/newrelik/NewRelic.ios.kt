@@ -1,8 +1,12 @@
 package com.myunidays.newrelik
 
-actual class NewRelic internal constructor(ios: cocoapods.NewRelicAgent.NewRelic){
+actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewRelic){
     actual fun start() {
         // no need to do anything here for ios, simply a polyfill for Android
+    }
+
+    actual fun crashNow() {
+        cocoapods.NewRelicAgent.NewRelic.crashNow()
     }
 
     actual companion object {

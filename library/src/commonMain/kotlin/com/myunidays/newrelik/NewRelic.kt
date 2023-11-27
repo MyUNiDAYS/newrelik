@@ -2,6 +2,7 @@ package com.myunidays.newrelik
 
 expect class NewRelic {
 
+    fun crashNow()
     fun start() // going to need to pass in a context here for android
 
     companion object {
