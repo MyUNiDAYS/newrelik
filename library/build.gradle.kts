@@ -58,8 +58,13 @@ kotlin {
     ios()
     iosSimulatorArm64()
     cocoapods {
+        ios.deploymentTarget = "11.0"
         framework {
             baseName = MODULE_NAME
+        }
+        pod("NewRelicAgent") {
+            version = "7.4.7"
+            headers = "NewRelic.xcframework/ios-arm64/NewRelic.framework/Headers/Agent.h"
         }
     }
 
@@ -70,7 +75,11 @@ kotlin {
                 implementation(kotlin("test"))
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                implementation("com.newrelic.agent.android:android-agent:7.2.0")
+            }
+        }
         val androidUnitTest by getting {
             dependencies {
                 implementation(testingLibs.junit)
