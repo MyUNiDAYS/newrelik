@@ -42,13 +42,13 @@ expect class NewRelic {
 
     fun recordMetric(name: String, category: String)
 
-    fun setAttribute(name: String?, value: String?)
+    fun setAttribute(name: String, value: String)
 
-    fun setAttribute(name: String?, value: Double)
+    fun setAttribute(name: String, value: Double)
 
-    fun setAttribute(name: String?, value: Boolean)
+    fun setAttribute(name: String, value: Boolean)
 
-    fun removeAttribute(name: String?)
+    fun removeAttribute(name: String)
 
     fun removeAllAttributes()
 
@@ -56,15 +56,15 @@ expect class NewRelic {
 
     fun incrementAttribute(name: String, value : Double)
 
-    fun setUserId(userId: String?)
+    fun setUserId(userId: String)
 
     fun setMaxEventBufferTime(maxBufferTimeInSec: Int)
 
     fun setMaxEventPoolSize(maxSize: Int)
 
-    fun withApplicationBuild(buildId: String?)
+    fun withApplicationBuild(buildId: String)
 
-    fun withApplicationVersion(appVersion: String?)
+    fun withApplicationVersion(appVersion: String)
 
     fun shutdown()
 
@@ -72,33 +72,33 @@ expect class NewRelic {
 
     fun crashNow(message: String)
 
-    fun noticeHttpTransaction(url: String?, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long)
+    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long)
 
-    fun noticeHttpTransaction(url: String?, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?)
+    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?)
 
-    fun noticeHttpTransaction(url: String?, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?)
+    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?)
 
-    fun noticeHttpTransaction(url: String?, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, appData: String?)
+    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, appData: String?)
 
-    fun noticeHttpTransaction(url: String?, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, urlConnection: URLConnection?)
+    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, urlConnection: URLConnection?)
 
     fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, appData: String?, traceAttributes: Map<String?, Any?>?)
 
-    fun noticeNetworkFailure(url: String?, httpMethod: String?, startTime: Long, endTime: Long, failure: NetworkFailure, message: String?)
+    fun noticeNetworkFailure(url: String, httpMethod: String?, startTime: Long, endTime: Long, failure: NetworkFailure, message: String?)
 
-    fun noticeNetworkFailure(url: String?, httpMethod: String?, startTime: Long, endTime: Long, failure: NetworkFailure)
+    fun noticeNetworkFailure(url: String, httpMethod: String?, startTime: Long, endTime: Long, failure: NetworkFailure)
 
-    fun noticeNetworkFailure(url: String?, httpMethod: String?, startTime: Long, endTime: Long, e: Exception)
-
-
-    @Deprecated("")
-    fun noticeNetworkFailure(url: String?, startTime: Long, endTime: Long, failure: NetworkFailure?)
+    fun noticeNetworkFailure(url: String, httpMethod: String?, startTime: Long, endTime: Long, e: Exception)
 
 
     @Deprecated("")
-    fun noticeNetworkFailure(url: String?, startTime: Long, endTime: Long, e: Exception?)
+    fun noticeNetworkFailure(url: String, startTime: Long, endTime: Long, failure: NetworkFailure?)
 
-    fun noticeNetworkFailure(url: String?, httpMethod: String?, startTimeMs: Long, endTimeMs: Long, failure: NetworkFailure, message: String?, traceAttributes: Map<String?, Any?>?)
+
+    @Deprecated("")
+    fun noticeNetworkFailure(url: String, startTime: Long, endTime: Long, e: Exception?)
+
+    fun noticeNetworkFailure(url: String, httpMethod: String?, startTimeMs: Long, endTimeMs: Long, failure: NetworkFailure, message: String?, traceAttributes: Map<String?, Any?>?)
 
     fun noticeDistributedTrace(requestAttributes: Map<String?, String?>?): TraceContext
 

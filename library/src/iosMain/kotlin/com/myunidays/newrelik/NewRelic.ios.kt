@@ -3,7 +3,9 @@ package com.myunidays.newrelik
 import platform.Foundation.NSError
 import platform.Foundation.NSException
 import platform.Foundation.NSNumber
+import platform.Foundation.NSURL.Companion.URLWithString
 import platform.Foundation.numberWithDouble
+import platform.darwin.NSInteger
 
 actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewRelic) {
     actual fun start(context: Context) {
@@ -19,6 +21,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     }
 
     actual fun setInteractionName(name: String?) {
+        // not used for ios
     }
 
     actual fun startInteraction(actionName: String) {
@@ -123,34 +126,43 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         cocoapods.NewRelicAgent.NewRelic.crashNow(message)
     }
 
-    actual fun setAttribute(name: String?, value: String?) {
+    actual fun setAttribute(name: String, value: String) {
+        cocoapods.NewRelicAgent.NewRelic.setAttribute(name, value)
     }
 
-    actual fun setAttribute(name: String?, value: Double) {
+    actual fun setAttribute(name: String, value: Double) {
+        cocoapods.NewRelicAgent.NewRelic.setAttribute(name, value)
     }
 
-    actual fun setAttribute(name: String?, value: Boolean) {
+    actual fun setAttribute(name: String, value: Boolean) {
+        cocoapods.NewRelicAgent.NewRelic.setAttribute(name, value)
     }
 
-    actual fun removeAttribute(name: String?) {
+    actual fun removeAttribute(name: String) {
+        cocoapods.NewRelicAgent.NewRelic.removeAttribute(name)
     }
 
     actual fun incrementAttribute(name: String) {
+        cocoapods.NewRelicAgent.NewRelic.incrementAttribute(name)
     }
-    actual fun setUserId(userId: String?) {
+    actual fun setUserId(userId: String) {
+        cocoapods.NewRelicAgent.NewRelic.setUserId(userId)
     }
 
-    actual fun withApplicationBuild(buildId: String?) {
+    actual fun withApplicationBuild(buildId: String) {
+        cocoapods.NewRelicAgent.NewRelic.setApplicationBuild(buildId)
     }
 
-    actual fun withApplicationVersion(appVersion: String?) {
+    actual fun withApplicationVersion(appVersion: String) {
+        cocoapods.NewRelicAgent.NewRelic.setApplicationVersion(appVersion)
     }
 
     actual fun crashNow() {
+        cocoapods.NewRelicAgent.NewRelic.crashNow()
     }
 
     actual fun noticeHttpTransaction(
-        url: String?,
+        url: String,
         httpMethod: String?,
         statusCode: Int,
         startTimeMs: Long,
@@ -158,10 +170,11 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         bytesSent: Long,
         bytesReceived: Long
     ) {
+        // probably not needed due to network swizling
     }
 
     actual fun noticeHttpTransaction(
-        url: String?,
+        url: String,
         httpMethod: String?,
         statusCode: Int,
         startTimeMs: Long,
@@ -173,7 +186,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     }
 
     actual fun noticeHttpTransaction(
-        url: String?,
+        url: String,
         httpMethod: String?,
         statusCode: Int,
         startTimeMs: Long,
@@ -186,7 +199,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     }
 
     actual fun noticeHttpTransaction(
-        url: String?,
+        url: String,
         httpMethod: String?,
         statusCode: Int,
         startTimeMs: Long,
@@ -200,7 +213,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     }
 
     actual fun noticeHttpTransaction(
-        url: String?,
+        url: String,
         httpMethod: String?,
         statusCode: Int,
         startTimeMs: Long,
@@ -229,53 +242,76 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     }
 
     actual fun noticeNetworkFailure(
-        url: String?,
+        url: String,
         httpMethod: String?,
         startTime: Long,
         endTime: Long,
         failure: NetworkFailure,
         message: String?
     ) {
+        cocoapods.NewRelicAgent.NewRelic.noticeNetworkFailureForURL(
+            URLWithString(url),
+            httpMethod,
+            startTime.toDouble(),
+            endTime.toDouble(),
+            andFailureCode = failure.ios.toLong()
+        )
     }
 
     actual fun noticeNetworkFailure(
-        url: String?,
+        url: String,
         httpMethod: String?,
         startTime: Long,
         endTime: Long,
         failure: NetworkFailure
     ) {
+        cocoapods.NewRelicAgent.NewRelic.noticeNetworkFailureForURL(
+            URLWithString(url),
+            httpMethod,
+            startTime.toDouble(),
+            endTime.toDouble(),
+            andFailureCode = failure.ios.toLong()
+        )
     }
 
     actual fun noticeNetworkFailure(
-        url: String?,
+        url: String,
         httpMethod: String?,
         startTime: Long,
         endTime: Long,
         e: Exception
     ) {
+        // not sure if we can support this one
     }
 
     @Deprecated("")
     actual fun noticeNetworkFailure(
-        url: String?,
+        url: String,
         startTime: Long,
         endTime: Long,
         failure: NetworkFailure?
     ) {
+        cocoapods.NewRelicAgent.NewRelic.noticeNetworkFailureForURL(
+            URLWithString(url),
+            null,
+            startTime.toDouble(),
+            endTime.toDouble(),
+            andFailureCode = failure!!.ios.toLong()
+        )
     }
 
     @Deprecated("")
     actual fun noticeNetworkFailure(
-        url: String?,
+        url: String,
         startTime: Long,
         endTime: Long,
         e: Exception?
     ) {
+        // same here, not sure ios supports.
     }
 
     actual fun noticeNetworkFailure(
-        url: String?,
+        url: String,
         httpMethod: String?,
         startTimeMs: Long,
         endTimeMs: Long,
@@ -283,16 +319,24 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         message: String?,
         traceAttributes: Map<String?, Any?>?
     ) {
+        cocoapods.NewRelicAgent.NewRelic.noticeNetworkFailureForURL(
+            URLWithString(url),
+            httpMethod,
+            startTimeMs.toDouble(),
+            endTimeMs.toDouble(),
+            andFailureCode = failure.ios.toLong()
+        )
     }
 
-    actual fun noticeDistributedTrace(requestAttributes: Map<String?, String?>?): TraceContext {
-        TODO("Not yet implemented")
-    }
+    actual fun noticeDistributedTrace(requestAttributes: Map<String?, String?>?): TraceContext =
+        TraceContext()
 
     actual fun addHTTPHeadersTrackingFor(headers: List<String>) {
+        // not sure its needed for ios.
     }
 
     actual fun withLaunchActivityName(className: String?) {
+        // not used for ios
     }
 
     actual fun usingCollectorAddress(address: String) {
@@ -314,6 +358,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     }
 
     actual fun withCrashReportingEnabled(enabled: Boolean) {
+        cocoapods.NewRelicAgent.NewRelic.enableCrashReporting(enabled)
     }
 
     actual fun withDistributedTraceListener(listener: TraceListener) {
@@ -326,6 +371,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     }
 
     actual fun startMethodTrace(actionName: String) {
+
     }
 
     actual fun endMethodTrace() {
