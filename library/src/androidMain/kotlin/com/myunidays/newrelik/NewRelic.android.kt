@@ -38,10 +38,6 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
         attributes: MutableMap<Any?, Any?>?
     ): Boolean = com.newrelic.agent.android.NewRelic.recordBreadcrumb(breadcrumbName, attributes as Map<String, Object>)
 
-    actual fun recordBreadcrumb(breadcrumbName: String, attributes: MutableMap<String?, Any?>?): Boolean {
-        return com.newrelic.agent.android.NewRelic.recordBreadcrumb(breadcrumbName, attributes)
-    }
-
     actual fun recordHandledException(throwable: Throwable) {
         com.newrelic.agent.android.NewRelic.recordHandledException(throwable)
     }

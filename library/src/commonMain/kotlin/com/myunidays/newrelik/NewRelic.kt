@@ -21,8 +21,6 @@ expect class NewRelic {
 
     fun recordBreadcrumb(breadcrumbName: String, attributes: MutableMap<Any?, Any?>?): Boolean
 
-    fun recordBreadcrumb(breadcrumbName: String, attributes: MutableMap<String?, Any?>?): Boolean
-
     fun recordHandledException(throwable: Throwable)
 
     fun recordHandledException(exception: Exception): Boolean

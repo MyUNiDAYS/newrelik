@@ -331,6 +331,21 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     actual fun endMethodTrace() {
     }
 
+    actual fun recordHandledException(exception: Exception): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    actual fun addHTTPHeadersTrackingFor(headers: List<String?>?): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    actual fun setEventListener(eventListener: EventListener?) {
+    }
+
+    actual fun recordJSErrorException(stackTrace: StackTrace?): Boolean {
+        TODO("Not yet implemented")
+    }
+
     actual companion object {
         actual fun withApplicationToken(token: String): NewRelic {
             val newRelic = cocoapods.NewRelicAgent.NewRelic.new()!!
