@@ -1,19 +1,17 @@
 package com.myunidays.newrelik
 
-import cocoapods.NewRelicAgent.NRMAFeatureFlags
-import com.rickclephas.kmp.nserrorkt.asNSError
 import platform.Foundation.NSError
 import platform.Foundation.NSException
 import platform.Foundation.NSNumber
+import platform.Foundation.numberWithDouble
 
 actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewRelic) {
-
-    actual fun start() {
-        // no need to do anything here for ios, simply a polyfill for Android
+    actual fun start(context: Context) {
+        // not used for ios as start happens when we set the token.
     }
 
-    actual fun crashNow() {
-        cocoapods.NewRelicAgent.NewRelic.crashNow()
+    actual fun disableFeature(featureFlag: FeatureFlag) {
+        cocoapods.NewRelicAgent.NewRelic.disableFeatures(featureFlag.ios)
     }
 
     actual fun enableFeature(featureFlag: FeatureFlag) {
@@ -21,59 +19,85 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     }
 
     actual fun setInteractionName(name: String?) {
-        cocoapods.NewRelicAgent.NewRelic.customNewRelicInteractionName(name)
     }
 
     actual fun startInteraction(actionName: String) {
-        cocoapods.NewRelicAgent.NewRelic.startInteraction(actionName)
+        cocoapods.NewRelicAgent.NewRelic.startInteractionWithName(actionName)
+    }
+
+    actual fun startInteraction(
+        activityContext: Context,
+        actionName: String
+    ) {
+        cocoapods.NewRelicAgent.NewRelic.startInteractionWithName(actionName)
     }
 
     actual fun endInteraction(id: String) {
-        cocoapods.NewRelicAgent.NewRelic.stopInteraction(id)
+        cocoapods.NewRelicAgent.NewRelic.stopCurrentInteraction(id)
     }
 
-    actual fun currentSessionId() {
-        cocoapods.NewRelicAgent.NewRelic.currentSessionId()
-    }
+    actual fun currentSessionId() : String? = cocoapods.NewRelicAgent.NewRelic.currentSessionId()
 
-    actual fun recordBreadcrumb(breadcrumbName: String, attributes: Map<String?, Any?>) {
-        cocoapods.NewRelicAgent.NewRelic.recordBreadcrumb(breadcrumbName, attributes)
-    }
-
-    actual fun recordHandledException(exception: Exception?, exceptionAttributes: Map<String?, Any?>?) {
-        cocoapods.NewRelicAgent.NewRelic.recordHandledException(exception, exceptionAttributes)
-    }
+    actual fun recordBreadcrumb(
+        breadcrumbName: String,
+        attributes: MutableMap<Any?, Any?>?
+    ): Boolean = cocoapods.NewRelicAgent.NewRelic.recordBreadcrumb(breadcrumbName, attributes)
 
     actual fun recordHandledException(throwable: Throwable) {
         cocoapods.NewRelicAgent.NewRelic.recordHandledException(throwable.asNSException())
     }
 
-    actual fun recordHandledException(throwable: Throwable?, attributes: Map<String?, Any?>?) {
-        cocoapods.NewRelicAgent.NewRelic.recordHandledException(throwable, attributes)
+    actual fun recordHandledException(
+        exception: Exception,
+        exceptionAttributes: Map<Any?, Any?>?
+    ) {
+        cocoapods.NewRelicAgent.NewRelic.recordHandledException(exception.asNSException(), exceptionAttributes)
     }
 
-    actual fun recordError(error: Any, map: Map<Any?, Any>?) {
+    actual fun recordHandledException(
+        throwable: Throwable,
+        attributes: Map<Any?, Any?>?
+    ) {
+        cocoapods.NewRelicAgent.NewRelic.recordHandledException(throwable.asNSException(), attributes)
+    }
+
+    // Need to have an expect actual for error.
+    actual fun recordError(
+        error: Any,
+        map: Map<Any?, Any>?
+    ) {
         cocoapods.NewRelicAgent.NewRelic.recordError(error as NSError, map)
     }
 
-    actual fun recordCustomEvent(eventType: String!, attributes:[NSObject : AnyObject]!) -> Bool {
-        cocoapods.NewRelicAgent.NewRelic.recordCustomEvent(eventType, attributes)
+    actual fun recordCustomEvent(
+        eventType: String,
+        eventName: String?,
+        eventAttributes: MutableMap<Any?, Any?>?
+    ): Boolean = cocoapods.NewRelicAgent.NewRelic.recordCustomEvent(eventType, eventName, eventAttributes)
+
+    actual fun recordCustomEvent(
+        eventType: String,
+        eventAttributes: Map<Any?, Any?>?
+    ): Boolean = cocoapods.NewRelicAgent.NewRelic.recordCustomEvent(eventType, eventAttributes)
+
+    actual fun recordMetric(
+        name: String,
+        category: String,
+        count: Int,
+        totalValue: Double,
+        exclusiveValue: Double,
+        countUnit: MetricUnit,
+        valueUnit: MetricUnit
+    ) {
+//        cocoapods.NewRelicAgent.NewRelic.recordMetricWithName(name, category, NSNumber.numberWithDouble(totalValue), valueUnit, countUnit)
     }
 
-    actual fun recordCustomEvent(eventType: String!, name: String!, attributes:[NSObject : AnyObject]!) -> Bool {
-        cocoapods.NewRelicAgent.NewRelic.recordCustomEvent(eventType, name, attributes)
+    actual fun recordMetric(name: String, category: String, value: Double) {
+        cocoapods.NewRelicAgent.NewRelic.recordMetricWithName(name, category, NSNumber.numberWithDouble(value))
     }
 
-    actual fun recordMetric(withName: String!, category: String!, value: NSNumber!) {
-        cocoapods.NewRelicAgent.NewRelic.recordMetric(withName: String!, category: String!, value: NSNumber!)
-    }
-
-    actual fun setAttribute(name: String, value: Double) {
-        cocoapods.NewRelicAgent.NewRelic.setAttribute(name, value)
-    }
-
-    actual fun removeAttribute(name: String) {
-        cocoapods.NewRelicAgent.NewRelic.removeAttribute(name)
+    actual fun recordMetric(name: String, category: String) {
+        cocoapods.NewRelicAgent.NewRelic.recordMetricWithName(name, category)
     }
 
     actual fun removeAllAttributes() {
@@ -84,10 +108,6 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         cocoapods.NewRelicAgent.NewRelic.incrementAttribute(name, NSNumber(value))
     }
 
-    actual fun setUserId(userId: String) {
-        cocoapods.NewRelicAgent.NewRelic.setUserId(userId)
-    }
-
     actual fun setMaxEventBufferTime(maxBufferTimeInSec: Int) {
         cocoapods.NewRelicAgent.NewRelic.setMaxEventBufferTime(maxBufferTimeInSec.toUInt())
     }
@@ -95,15 +115,6 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     actual fun setMaxEventPoolSize(maxSize: Int) {
         cocoapods.NewRelicAgent.NewRelic.setMaxEventPoolSize(maxSize.toUInt())
     }
-
-    actual fun withApplicationBuild(buildId: String) {
-        cocoapods.NewRelicAgent.NewRelic.setApplicationBuild(buildId)
-    }
-
-    actual fun withApplicationVersion(appVersion: String?) {
-        cocoapods.NewRelicAgent.NewRelic.withApplicationVersion(appVersion)
-    }
-
     actual fun shutdown() {
         cocoapods.NewRelicAgent.NewRelic.shutdown()
     }
@@ -112,19 +123,213 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         cocoapods.NewRelicAgent.NewRelic.crashNow(message)
     }
 
-    actual fun noticeHttpTransaction(url: String?, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?) {
-        cocoapods.NewRelicAgent.NewRelic.noticeNetworkRequest(url, httpMethod, statusCode, startTimeMs, endTimeMs, bytesSent, bytesReceived, responseBody)
+    actual fun setAttribute(name: String?, value: String?) {
     }
 
-    actual fun noticeNetworkFailure(url: String?, httpMethod: String?, startTime: Long, endTime: Long, failure: NetworkFailure?) {
-        cocoapods.NewRelicAgent.NewRelic.noticeNetworkFailure(url, httpMethod, startTime, failure)
+    actual fun setAttribute(name: String?, value: Double) {
+    }
+
+    actual fun setAttribute(name: String?, value: Boolean) {
+    }
+
+    actual fun removeAttribute(name: String?) {
+    }
+
+    actual fun incrementAttribute(name: String) {
+    }
+    actual fun setUserId(userId: String?) {
+    }
+
+    actual fun withApplicationBuild(buildId: String?) {
+    }
+
+    actual fun withApplicationVersion(appVersion: String?) {
+    }
+
+    actual fun crashNow() {
+    }
+
+    actual fun noticeHttpTransaction(
+        url: String?,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long
+    ) {
+    }
+
+    actual fun noticeHttpTransaction(
+        url: String?,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?
+    ) {
+    }
+
+    actual fun noticeHttpTransaction(
+        url: String?,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?
+    ) {
+    }
+
+    actual fun noticeHttpTransaction(
+        url: String?,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?,
+        appData: String?
+    ) {
+    }
+
+    actual fun noticeHttpTransaction(
+        url: String?,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?,
+        urlConnection: URLConnection?
+    ) {
+    }
+
+    actual fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?,
+        appData: String?,
+        traceAttributes: Map<String?, Any?>?
+    ) {
+    }
+
+    actual fun noticeNetworkFailure(
+        url: String?,
+        httpMethod: String?,
+        startTime: Long,
+        endTime: Long,
+        failure: NetworkFailure,
+        message: String?
+    ) {
+    }
+
+    actual fun noticeNetworkFailure(
+        url: String?,
+        httpMethod: String?,
+        startTime: Long,
+        endTime: Long,
+        failure: NetworkFailure
+    ) {
+    }
+
+    actual fun noticeNetworkFailure(
+        url: String?,
+        httpMethod: String?,
+        startTime: Long,
+        endTime: Long,
+        e: Exception
+    ) {
+    }
+
+    @Deprecated("")
+    actual fun noticeNetworkFailure(
+        url: String?,
+        startTime: Long,
+        endTime: Long,
+        failure: NetworkFailure?
+    ) {
+    }
+
+    @Deprecated("")
+    actual fun noticeNetworkFailure(
+        url: String?,
+        startTime: Long,
+        endTime: Long,
+        e: Exception?
+    ) {
+    }
+
+    actual fun noticeNetworkFailure(
+        url: String?,
+        httpMethod: String?,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        failure: NetworkFailure,
+        message: String?,
+        traceAttributes: Map<String?, Any?>?
+    ) {
+    }
+
+    actual fun noticeDistributedTrace(requestAttributes: Map<String?, String?>?): TraceContext {
+        TODO("Not yet implemented")
     }
 
     actual fun addHTTPHeadersTrackingFor(headers: List<String>) {
-        cocoapods.NewRelicAgent.NewRelic.addHTTPHeaderTracking(headers)
     }
 
-    actual fun  noticeHttpTransaction(String url, String httpMethod, int statusCode, long startTimeMs, long endTimeMs, long bytesSent, long bytesReceived, String responseBody, Map<String, String> params, URLConnection urlConnection)
+    actual fun withLaunchActivityName(className: String?) {
+    }
+
+    actual fun usingCollectorAddress(address: String) {
+    }
+
+    actual fun usingCrashCollectorAddress(address: String) {
+    }
+
+    actual fun withLoggingEnabled(enabled: Boolean) {
+    }
+
+    actual fun withLogLevel(level: Int) {
+    }
+
+    actual fun withApplicationFramework(
+        applicationFramework: ApplicationFramework,
+        frameworkVersion: String
+    ) {
+    }
+
+    actual fun withCrashReportingEnabled(enabled: Boolean) {
+    }
+
+    actual fun withDistributedTraceListener(listener: TraceListener) {
+    }
+
+    actual fun withDeviceID(deviceId: String) {
+    }
+
+    actual fun isStarted() {
+    }
+
+    actual fun startMethodTrace(actionName: String) {
+    }
+
+    actual fun endMethodTrace() {
+    }
 
     actual companion object {
         actual fun withApplicationToken(token: String): NewRelic {
@@ -133,9 +338,6 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
             return NewRelic(newRelic)
         }
     }
-
-
-
 }
 
 fun Throwable.asNSException() = NSException.exceptionWithName(this::class.qualifiedName, this.message, null)

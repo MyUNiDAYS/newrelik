@@ -17,29 +17,28 @@ expect class NewRelic {
 
     fun endInteraction(id: String)
 
-    fun currentSessionId()
+    fun currentSessionId(): String?
 
-    fun recordBreadcrumb(breadcrumbName: String?, attributes: Map<String?, Any?>?)
+    fun recordBreadcrumb(breadcrumbName: String, attributes: MutableMap<Any?, Any?>?): Boolean
 
-    fun recordBreadcrumb(breadcrumbName: String?, attributes: MutableMap<String?, Any?>?): Boolean
+    fun recordHandledException(throwable: Throwable)
 
-    fun recordHandledException(throwable: Throwable?)
+    fun recordHandledException(exception: Exception, exceptionAttributes: Map<Any?, Any?>?)
 
-    fun recordHandledException(exception: Exception?, exceptionAttributes: Map<String?, Any?>?)
-
-    fun recordHandledException(throwable: Throwable?, attributes: Map<String?, Any?>?)
+    fun recordHandledException(throwable: Throwable, attributes: Map<Any?, Any?>?)
 
     fun recordError(error: Any, map: Map<Any?, Any>?)
 
-    fun recordCustomEvent(eventType: String?, eventName: String?, eventAttributes: MutableMap<String?, Any?>?)
+    fun recordCustomEvent(eventType: String, eventName: String?, eventAttributes: MutableMap<Any?, Any?>?): Boolean
 
-    fun recordCustomEvent(eventType: String?, eventAttributes: Map<String?, Any?>?): Boolean
+    fun recordCustomEvent(eventType: String, eventAttributes: Map<Any?, Any?>?): Boolean
 
     fun recordMetric(name: String, category: String, count: Int, totalValue: Double, exclusiveValue: Double, countUnit: MetricUnit, valueUnit: MetricUnit)
 
-    fun recordMetric(name: String?, category: String?, value: Double)
+    // some of these can be merged into one with optionals.
+    fun recordMetric(name: String, category: String, value: Double)
 
-    fun recordMetric(name: String?, category: String?)
+    fun recordMetric(name: String, category: String)
 
     fun setAttribute(name: String?, value: String?)
 

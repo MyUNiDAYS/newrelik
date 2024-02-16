@@ -1,12 +1,10 @@
 package com.myunidays.newrelik
 
-import android.content.Context
-
 
 actual class NewRelic internal constructor(private val android: com.newrelic.agent.android.NewRelic){
 
     actual fun start(context: Context) {
-        android.start(context)
+        android.start(context.android)
     }
 
     actual fun disableFeature(featureFlag: FeatureFlag) {
@@ -26,58 +24,56 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
     }
 
     actual fun startInteraction(activityContext: Context, actionName: String) {
-        com.newrelic.agent.android.NewRelic.startInteraction(activityContext, actionName)
+        com.newrelic.agent.android.NewRelic.startInteraction(activityContext.android, actionName)
     }
 
     actual fun endInteraction(id: String) {
         com.newrelic.agent.android.NewRelic.endInteraction(id)
     }
 
-    actual fun currentSessionId() {
-        com.newrelic.agent.android.NewRelic.currentSessionId()
-    }
+    actual fun currentSessionId(): String? = com.newrelic.agent.android.NewRelic.currentSessionId()
 
-    actual fun recordBreadcrumb(breadcrumbName: String?, attributes: Map<String?, Any?>?) {
-        com.newrelic.agent.android.NewRelic.recordBreadcrumb(breadcrumbName, attributes)
-    }
+    actual fun recordBreadcrumb(
+        breadcrumbName: String,
+        attributes: MutableMap<Any?, Any?>?
+    ): Boolean = com.newrelic.agent.android.NewRelic.recordBreadcrumb(breadcrumbName, attributes as Map<String, Object>)
 
-    actual fun recordBreadcrumb(breadcrumbName: String?, attributes: MutableMap<String?, Any?>?): Boolean {
-        return com.newrelic.agent.android.NewRelic.recordBreadcrumb(breadcrumbName, attributes)
-    }
-
-    actual fun recordHandledException(throwable: Throwable?) {
+    actual fun recordHandledException(throwable: Throwable) {
         com.newrelic.agent.android.NewRelic.recordHandledException(throwable)
     }
 
-    actual fun recordHandledException(exception: Exception?, exceptionAttributes: Map<String?, Any?>?) {
-        com.newrelic.agent.android.NewRelic.recordHandledException(exception, exceptionAttributes)
+    actual fun recordHandledException(exception: Exception, exceptionAttributes: Map<Any?, Any?>?) {
+        com.newrelic.agent.android.NewRelic.recordHandledException(exception, exceptionAttributes as Map<String, Object>)
     }
 
-    actual fun recordHandledException(throwable: Throwable?, attributes: Map<String?, Any?>?) {
-        com.newrelic.agent.android.NewRelic.recordHandledException(throwable, attributes)
+    actual fun recordHandledException(throwable: Throwable, attributes: Map<Any?, Any?>?) {
+        com.newrelic.agent.android.NewRelic.recordHandledException(throwable, attributes as Map<String, Any> )
     }
 
     // no recordError function for Android
 
     actual fun recordError(error: Any, map: Map<Any?, Any>?) {}
 
-    actual fun recordCustomEvent(eventType: String?, eventName: String?, eventAttributes: MutableMap<String?, Any?>?) {
-        com.newrelic.agent.android.NewRelic.recordCustomEvent(eventType, eventName, eventAttributes)
-    }
+    actual fun recordCustomEvent(
+        eventType: String,
+        eventName: String?,
+        eventAttributes: MutableMap<Any?, Any?>?
+    ): Boolean = com.newrelic.agent.android.NewRelic.recordCustomEvent(eventType, eventName, eventAttributes as Map<String, Any>)
 
-    actual fun recordCustomEvent(eventType: String?, eventAttributes: Map<String?, Any?>?): Boolean {
-        return com.newrelic.agent.android.NewRelic.recordCustomEvent(eventType, eventAttributes)
-    }
+    actual fun recordCustomEvent(
+        eventType: String,
+        eventAttributes: Map<Any?, Any?>?
+    ): Boolean = com.newrelic.agent.android.NewRelic.recordCustomEvent(eventType, eventAttributes as Map<String, Any>)
 
     actual fun recordMetric(name: String, category: String, count: Int, totalValue: Double, exclusiveValue: Double, countUnit: MetricUnit, valueUnit: MetricUnit) {
         com.newrelic.agent.android.NewRelic.recordMetric(name, category, count, totalValue, exclusiveValue, countUnit.android, valueUnit.android)
     }
 
-    actual fun recordMetric(name: String?, category: String?, value: Double) {
+    actual fun recordMetric(name: String, category: String, value: Double) {
         com.newrelic.agent.android.NewRelic.recordMetric(name, category, value)
     }
 
-    actual fun recordMetric(name: String?, category: String?) {
+    actual fun recordMetric(name: String, category: String) {
         com.newrelic.agent.android.NewRelic.recordMetric(name, category)
     }
 
@@ -180,7 +176,7 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
 
     @Deprecated("")
     actual fun noticeNetworkFailure(url: String?, startTime: Long, endTime: Long, failure: com.myunidays.newrelik.NetworkFailure?) {
-        com.newrelic.agent.android.NewRelic.noticeNetworkFailure(url, startTime, endTime, failure.android)
+        com.newrelic.agent.android.NewRelic.noticeNetworkFailure(url, startTime, endTime, failure?.android)
     }
 
     @Deprecated("")
@@ -253,4 +249,5 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
         actual fun withApplicationToken(token: String): NewRelic =
             NewRelic(com.newrelic.agent.android.NewRelic.withApplicationToken(token))
     }
+
 }
