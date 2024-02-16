@@ -1,5 +1,9 @@
 package com.myunidays.newrelik
 
+import cocoapods.NewRelicAgent.NRMAFeatureFlags
+import com.rickclephas.kmp.nserrorkt.asNSError
+import platform.Foundation.NSError
+import platform.Foundation.NSException
 import platform.Foundation.NSNumber
 
 actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewRelic) {
@@ -10,6 +14,10 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
 
     actual fun crashNow() {
         cocoapods.NewRelicAgent.NewRelic.crashNow()
+    }
+
+    actual fun enableFeature(featureFlag: FeatureFlag) {
+        cocoapods.NewRelicAgent.NewRelic.enableFeatures(featureFlag.ios)
     }
 
     actual fun setInteractionName(name: String?) {
@@ -36,16 +44,16 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         cocoapods.NewRelicAgent.NewRelic.recordHandledException(exception, exceptionAttributes)
     }
 
-    actual fun recordHandledException(throwable: Throwable?) {
-        cocoapods.NewRelicAgent.NewRelic.recordHandledException(throwable)
+    actual fun recordHandledException(throwable: Throwable) {
+        cocoapods.NewRelicAgent.NewRelic.recordHandledException(throwable.asNSException())
     }
 
     actual fun recordHandledException(throwable: Throwable?, attributes: Map<String?, Any?>?) {
         cocoapods.NewRelicAgent.NewRelic.recordHandledException(throwable, attributes)
     }
 
-    actual fun recordError(error: $Error, map: $eventAttributes) {
-        cocoapods.NewRelicAgent.NewRelic.recordError(error, map)
+    actual fun recordError(error: Any, map: Map<Any?, Any>?) {
+        cocoapods.NewRelicAgent.NewRelic.recordError(error as NSError, map)
     }
 
     actual fun recordCustomEvent(eventType: String!, attributes:[NSObject : AnyObject]!) -> Bool {
@@ -116,6 +124,8 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         cocoapods.NewRelicAgent.NewRelic.addHTTPHeaderTracking(headers)
     }
 
+    actual fun  noticeHttpTransaction(String url, String httpMethod, int statusCode, long startTimeMs, long endTimeMs, long bytesSent, long bytesReceived, String responseBody, Map<String, String> params, URLConnection urlConnection)
+
     actual companion object {
         actual fun withApplicationToken(token: String): NewRelic {
             val newRelic = cocoapods.NewRelicAgent.NewRelic.new()!!
@@ -127,3 +137,5 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
 
 
 }
+
+fun Throwable.asNSException() = NSException.exceptionWithName(this::class.qualifiedName, this.message, null)
