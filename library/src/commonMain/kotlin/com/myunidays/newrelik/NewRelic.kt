@@ -3,8 +3,9 @@ package com.myunidays.newrelik
 expect class NewRelic {
 
     fun start(context: Context) // going to need to pass in a context here for android
-//ios Context = UIApplication in UIKit
-    //android use application
+
+// ios Context = UIApplication in UIKit
+    // android use application
     fun disableFeature(featureFlag: FeatureFlag)
 
     fun enableFeature(featureFlag: FeatureFlag)
@@ -54,7 +55,7 @@ expect class NewRelic {
 
     fun incrementAttribute(name: String)
 
-    fun incrementAttribute(name: String, value : Double)
+    fun incrementAttribute(name: String, value: Double)
 
     fun setUserId(userId: String)
 
@@ -90,10 +91,8 @@ expect class NewRelic {
 
     fun noticeNetworkFailure(url: String, httpMethod: String?, startTime: Long, endTime: Long, e: Exception)
 
-
     @Deprecated("")
     fun noticeNetworkFailure(url: String, startTime: Long, endTime: Long, failure: NetworkFailure?)
-
 
     @Deprecated("")
     fun noticeNetworkFailure(url: String, startTime: Long, endTime: Long, e: Exception?)

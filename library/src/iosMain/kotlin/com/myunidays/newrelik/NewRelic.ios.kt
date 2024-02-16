@@ -5,7 +5,6 @@ import platform.Foundation.NSException
 import platform.Foundation.NSNumber
 import platform.Foundation.NSURL.Companion.URLWithString
 import platform.Foundation.numberWithDouble
-import platform.darwin.NSInteger
 
 actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewRelic) {
     actual fun start(context: Context) {
@@ -39,7 +38,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         cocoapods.NewRelicAgent.NewRelic.stopCurrentInteraction(id)
     }
 
-    actual fun currentSessionId() : String? = cocoapods.NewRelicAgent.NewRelic.currentSessionId()
+    actual fun currentSessionId(): String? = cocoapods.NewRelicAgent.NewRelic.currentSessionId()
 
     actual fun recordBreadcrumb(
         breadcrumbName: String,
@@ -107,7 +106,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         cocoapods.NewRelicAgent.NewRelic.removeAllAttributes()
     }
 
-    actual fun incrementAttribute(name: String, value : Double) {
+    actual fun incrementAttribute(name: String, value: Double) {
         cocoapods.NewRelicAgent.NewRelic.incrementAttribute(name, NSNumber(value))
     }
 
@@ -371,7 +370,6 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     }
 
     actual fun startMethodTrace(actionName: String) {
-
     }
 
     actual fun endMethodTrace() {
