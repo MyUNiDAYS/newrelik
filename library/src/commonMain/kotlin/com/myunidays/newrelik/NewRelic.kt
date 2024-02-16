@@ -21,7 +21,11 @@ expect class NewRelic {
 
     fun recordBreadcrumb(breadcrumbName: String, attributes: MutableMap<Any?, Any?>?): Boolean
 
+    fun recordBreadcrumb(breadcrumbName: String, attributes: MutableMap<String?, Any?>?): Boolean
+
     fun recordHandledException(throwable: Throwable)
+
+    fun recordHandledException(exception: Exception): Boolean
 
     fun recordHandledException(exception: Exception, exceptionAttributes: Map<Any?, Any?>?)
 
@@ -125,6 +129,12 @@ expect class NewRelic {
     fun startMethodTrace(actionName: String)
 
     fun endMethodTrace()
+
+    fun setEventListener(eventListener: EventListener?)
+
+    fun recordJSErrorException(stackTrace: StackTrace?): Boolean
+
+    fun addHTTPHeadersTrackingFor(headers: List<String?>?): Boolean
 
     companion object {
         fun withApplicationToken(token: String): NewRelic

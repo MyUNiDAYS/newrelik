@@ -38,8 +38,16 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
         attributes: MutableMap<Any?, Any?>?
     ): Boolean = com.newrelic.agent.android.NewRelic.recordBreadcrumb(breadcrumbName, attributes as Map<String, Object>)
 
+    actual fun recordBreadcrumb(breadcrumbName: String, attributes: MutableMap<String?, Any?>?): Boolean {
+        return com.newrelic.agent.android.NewRelic.recordBreadcrumb(breadcrumbName, attributes)
+    }
+
     actual fun recordHandledException(throwable: Throwable) {
         com.newrelic.agent.android.NewRelic.recordHandledException(throwable)
+    }
+
+    actual fun recordHandledException(exception: Exception): Boolean {
+        return com.newrelic.agent.android.NewRelic.recordHandledException(exception)
     }
 
     actual fun recordHandledException(exception: Exception, exceptionAttributes: Map<Any?, Any?>?) {
@@ -245,9 +253,20 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
         com.newrelic.agent.android.NewRelic.endMethodTrace()
     }
 
+    actual fun setEventListener(eventListener: EventListener?) {
+        com.newrelic.agent.android.NewRelic.setEventListener(eventListener?.android)
+    }
+
+    actual fun recordJSErrorException(stackTrace: StackTrace?): Boolean {
+        return com.newrelic.agent.android.NewRelic.recordJSErrorException(stackTrace?.android)
+    }
+
+    actual fun addHTTPHeadersTrackingFor(headers: List<String?>?): Boolean {
+        return com.newrelic.agent.android.NewRelic.addHTTPHeadersTrackingFor(headers)
+    }
+
     actual companion object {
         actual fun withApplicationToken(token: String): NewRelic =
             NewRelic(com.newrelic.agent.android.NewRelic.withApplicationToken(token))
     }
-
 }
