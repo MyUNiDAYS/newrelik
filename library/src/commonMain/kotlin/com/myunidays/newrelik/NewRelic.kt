@@ -1,5 +1,6 @@
 package com.myunidays.newrelik
 
+@Suppress("TooManyFunctions")
 expect class NewRelic {
 
     fun start(context: Context) // going to need to pass in a context here for android
@@ -36,7 +37,16 @@ expect class NewRelic {
 
     fun recordCustomEvent(eventType: String, eventAttributes: Map<Any?, Any?>?): Boolean
 
-    fun recordMetric(name: String, category: String, count: Int, totalValue: Double, exclusiveValue: Double, countUnit: MetricUnit, valueUnit: MetricUnit)
+    @Suppress("LongParameterList")
+    fun recordMetric(
+        name: String,
+        category: String,
+        count: Int,
+        totalValue: Double,
+        exclusiveValue: Double,
+        countUnit: MetricUnit,
+        valueUnit: MetricUnit
+    )
 
     // some of these can be merged into one with optionals.
     fun recordMetric(name: String, category: String, value: Double)
@@ -73,19 +83,94 @@ expect class NewRelic {
 
     fun crashNow(message: String)
 
-    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long)
+    @Suppress("LongParameterList")
+    fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long
+    )
 
-    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?)
+    @Suppress("LongParameterList")
+    fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?
+    )
 
-    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?)
+    @Suppress("LongParameterList")
+    fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?
+    )
 
-    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, appData: String?)
+    @Suppress("LongParameterList")
+    fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?,
+        appData: String?
+    )
 
-    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, urlConnection: URLConnection?)
+    @Suppress("LongParameterList")
+    fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?,
+        urlConnection: URLConnection?
+    )
 
-    fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, appData: String?, traceAttributes: Map<String?, Any?>?)
+    @Suppress("LongParameterList")
+    fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?,
+        appData: String?,
+        traceAttributes: Map<String?, Any?>?
+    )
 
-    fun noticeNetworkFailure(url: String, httpMethod: String?, startTime: Long, endTime: Long, failure: NetworkFailure, message: String?)
+    @Suppress("LongParameterList")
+    fun noticeNetworkFailure(
+        url: String,
+        httpMethod: String?,
+        startTime: Long,
+        endTime: Long,
+        failure: NetworkFailure,
+        message: String?
+    )
 
     fun noticeNetworkFailure(url: String, httpMethod: String?, startTime: Long, endTime: Long, failure: NetworkFailure)
 
@@ -97,7 +182,16 @@ expect class NewRelic {
     @Deprecated("")
     fun noticeNetworkFailure(url: String, startTime: Long, endTime: Long, e: Exception?)
 
-    fun noticeNetworkFailure(url: String, httpMethod: String?, startTimeMs: Long, endTimeMs: Long, failure: NetworkFailure, message: String?, traceAttributes: Map<String?, Any?>?)
+    @Suppress("LongParameterList")
+    fun noticeNetworkFailure(
+        url: String,
+        httpMethod: String?,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        failure: NetworkFailure,
+        message: String?,
+        traceAttributes: Map<String?, Any?>?
+    )
 
     fun noticeDistributedTrace(requestAttributes: Map<String?, String?>?): TraceContext
 

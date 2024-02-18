@@ -1,5 +1,6 @@
 package com.myunidays.newrelik
 
+@Suppress("TooManyFunctions")
 actual class NewRelic internal constructor(private val android: com.newrelic.agent.android.NewRelic) {
 
     actual fun start(context: Context) {
@@ -58,6 +59,7 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
 
     // no recordError function for Android
 
+    @Suppress("EmptyFunctionBlock")
     actual fun recordError(error: Any, map: Map<Any?, Any>?) {}
 
     actual fun recordCustomEvent(
@@ -75,7 +77,16 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
         eventAttributes: Map<Any?, Any?>?
     ): Boolean = com.newrelic.agent.android.NewRelic.recordCustomEvent(eventType, eventAttributes as Map<String, Any>)
 
-    actual fun recordMetric(name: String, category: String, count: Int, totalValue: Double, exclusiveValue: Double, countUnit: MetricUnit, valueUnit: MetricUnit) {
+    @Suppress("LongParameterList")
+    actual fun recordMetric(
+        name: String,
+        category: String,
+        count: Int,
+        totalValue: Double,
+        exclusiveValue: Double,
+        countUnit: MetricUnit,
+        valueUnit: MetricUnit
+    ) {
         com.newrelic.agent.android.NewRelic.recordMetric(
             name,
             category,
@@ -155,7 +166,16 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
         com.newrelic.agent.android.NewRelic.crashNow(message)
     }
 
-    actual fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long) {
+    @Suppress("LongParameterList")
+    actual fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long
+    ) {
         com.newrelic.agent.android.NewRelic.noticeHttpTransaction(
             url,
             httpMethod,
@@ -167,7 +187,17 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
         )
     }
 
-    actual fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?) {
+    @Suppress("LongParameterList")
+    actual fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?
+    ) {
         com.newrelic.agent.android.NewRelic.noticeHttpTransaction(
             url,
             httpMethod,
@@ -180,23 +210,123 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
         )
     }
 
-    actual fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?) {
-        com.newrelic.agent.android.NewRelic.noticeHttpTransaction(url, httpMethod, statusCode, startTimeMs, endTimeMs, bytesSent, bytesReceived, responseBody, params)
+    @Suppress("LongParameterList")
+    actual fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?
+    ) {
+        com.newrelic.agent.android.NewRelic.noticeHttpTransaction(
+            url,
+            httpMethod,
+            statusCode,
+            startTimeMs,
+            endTimeMs,
+            bytesSent,
+            bytesReceived,
+            responseBody,
+            params
+        )
     }
 
-    actual fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, appData: String?) {
-        com.newrelic.agent.android.NewRelic.noticeHttpTransaction(url, httpMethod, statusCode, startTimeMs, endTimeMs, bytesSent, bytesReceived, responseBody, params, appData)
+    @Suppress("LongParameterList")
+    actual fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?,
+        appData: String?
+    ) {
+        com.newrelic.agent.android.NewRelic.noticeHttpTransaction(
+            url,
+            httpMethod,
+            statusCode,
+            startTimeMs,
+            endTimeMs,
+            bytesSent,
+            bytesReceived,
+            responseBody,
+            params,
+            appData
+        )
     }
 
-    actual fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, urlConnection: URLConnection?) {
-        com.newrelic.agent.android.NewRelic.noticeHttpTransaction(url, httpMethod, statusCode, startTimeMs, endTimeMs, bytesSent, bytesReceived, responseBody, params, urlConnection?.android)
+    @Suppress("LongParameterList")
+    actual fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?,
+        urlConnection: URLConnection?
+    ) {
+        com.newrelic.agent.android.NewRelic.noticeHttpTransaction(
+            url,
+            httpMethod,
+            statusCode,
+            startTimeMs,
+            endTimeMs,
+            bytesSent,
+            bytesReceived,
+            responseBody,
+            params,
+            urlConnection?.android
+        )
     }
 
-    actual fun noticeHttpTransaction(url: String, httpMethod: String?, statusCode: Int, startTimeMs: Long, endTimeMs: Long, bytesSent: Long, bytesReceived: Long, responseBody: String?, params: Map<String?, String?>?, appData: String?, traceAttributes: Map<String?, Any?>?) {
-        com.newrelic.agent.android.NewRelic.noticeHttpTransaction(url, httpMethod, statusCode, startTimeMs, endTimeMs, bytesSent, bytesReceived, responseBody, params, appData, traceAttributes)
+    @Suppress("LongParameterList")
+    actual fun noticeHttpTransaction(
+        url: String,
+        httpMethod: String?,
+        statusCode: Int,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        bytesSent: Long,
+        bytesReceived: Long,
+        responseBody: String?,
+        params: Map<String?, String?>?,
+        appData: String?,
+        traceAttributes: Map<String?, Any?>?
+    ) {
+        com.newrelic.agent.android.NewRelic.noticeHttpTransaction(
+            url,
+            httpMethod,
+            statusCode,
+            startTimeMs,
+            endTimeMs,
+            bytesSent,
+            bytesReceived,
+            responseBody,
+            params,
+            appData,
+            traceAttributes
+        )
     }
 
-    actual fun noticeNetworkFailure(url: String, httpMethod: String?, startTime: Long, endTime: Long, failure: NetworkFailure, message: String?) {
+    @Suppress("LongParameterList")
+    actual fun noticeNetworkFailure(
+        url: String,
+        httpMethod: String?,
+        startTime: Long,
+        endTime: Long,
+        failure: NetworkFailure,
+        message: String?
+    ) {
         com.newrelic.agent.android.NewRelic.noticeNetworkFailure(
             url,
             httpMethod,
@@ -207,10 +337,24 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
         )
     }
 
-    actual fun noticeNetworkFailure(url: String, httpMethod: String?, startTime: Long, endTime: Long, failure: NetworkFailure) {
-        com.newrelic.agent.android.NewRelic.noticeNetworkFailure(url, httpMethod, startTime, endTime, failure.android)
+    @Suppress("LongParameterList")
+    actual fun noticeNetworkFailure(
+        url: String,
+        httpMethod: String?,
+        startTime: Long,
+        endTime: Long,
+        failure: NetworkFailure
+    ) {
+        com.newrelic.agent.android.NewRelic.noticeNetworkFailure(
+            url,
+            httpMethod,
+            startTime,
+            endTime,
+            failure.android
+        )
     }
 
+    @Suppress("LongParameterList")
     actual fun noticeNetworkFailure(url: String, httpMethod: String?, startTime: Long, endTime: Long, e: Exception) {
         com.newrelic.agent.android.NewRelic.noticeNetworkFailure(url, httpMethod, startTime, endTime, e)
     }
@@ -230,7 +374,16 @@ actual class NewRelic internal constructor(private val android: com.newrelic.age
         com.newrelic.agent.android.NewRelic.noticeNetworkFailure(url, startTime, endTime, e)
     }
 
-    actual fun noticeNetworkFailure(url: String, httpMethod: String?, startTimeMs: Long, endTimeMs: Long, failure: NetworkFailure, message: String?, traceAttributes: Map<String?, Any?>?) {
+    @Suppress("LongParameterList")
+    actual fun noticeNetworkFailure(
+        url: String,
+        httpMethod: String?,
+        startTimeMs: Long,
+        endTimeMs: Long,
+        failure: NetworkFailure,
+        message: String?,
+        traceAttributes: Map<String?, Any?>?
+    ) {
         com.newrelic.agent.android.NewRelic.noticeNetworkFailure(
             url,
             httpMethod,

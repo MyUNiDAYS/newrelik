@@ -6,6 +6,7 @@ import platform.Foundation.NSNumber
 import platform.Foundation.NSURL.Companion.URLWithString
 import platform.Foundation.numberWithDouble
 
+@Suppress("TooManyFunctions")
 actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewRelic) {
     actual fun start(context: Context) {
         // not used for ios as start happens when we set the token.
@@ -82,6 +83,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         eventAttributes: Map<Any?, Any?>?
     ): Boolean = cocoapods.NewRelicAgent.NewRelic.recordCustomEvent(eventType, eventAttributes)
 
+    @Suppress("LongParameterList")
     actual fun recordMetric(
         name: String,
         category: String,
@@ -91,7 +93,13 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         countUnit: MetricUnit,
         valueUnit: MetricUnit
     ) {
-//        cocoapods.NewRelicAgent.NewRelic.recordMetricWithName(name, category, NSNumber.numberWithDouble(totalValue), valueUnit, countUnit)
+//        cocoapods.NewRelicAgent.NewRelic.recordMetricWithName(
+        //        name,
+        //        category,
+        //        NSNumber.numberWithDouble(totalValue),
+        //        valueUnit,
+        //        countUnit
+        //    )
     }
 
     actual fun recordMetric(name: String, category: String, value: Double) {
@@ -160,6 +168,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         cocoapods.NewRelicAgent.NewRelic.crashNow()
     }
 
+    @Suppress("LongParameterList")
     actual fun noticeHttpTransaction(
         url: String,
         httpMethod: String?,
@@ -172,6 +181,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         // probably not needed due to network swizling
     }
 
+    @Suppress("LongParameterList", "EmptyFunctionBlock")
     actual fun noticeHttpTransaction(
         url: String,
         httpMethod: String?,
@@ -184,6 +194,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     ) {
     }
 
+    @Suppress("LongParameterList", "EmptyFunctionBlock")
     actual fun noticeHttpTransaction(
         url: String,
         httpMethod: String?,
@@ -197,6 +208,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     ) {
     }
 
+    @Suppress("LongParameterList", "EmptyFunctionBlock")
     actual fun noticeHttpTransaction(
         url: String,
         httpMethod: String?,
@@ -211,6 +223,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     ) {
     }
 
+    @Suppress("LongParameterList", "EmptyFunctionBlock")
     actual fun noticeHttpTransaction(
         url: String,
         httpMethod: String?,
@@ -225,6 +238,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     ) {
     }
 
+    @Suppress("LongParameterList", "EmptyFunctionBlock")
     actual fun noticeHttpTransaction(
         url: String,
         httpMethod: String?,
@@ -240,6 +254,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
     ) {
     }
 
+    @Suppress("LongParameterList")
     actual fun noticeNetworkFailure(
         url: String,
         httpMethod: String?,
@@ -309,6 +324,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         // same here, not sure ios supports.
     }
 
+    @Suppress("LongParameterList")
     actual fun noticeNetworkFailure(
         url: String,
         httpMethod: String?,
@@ -338,18 +354,23 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         // not used for ios
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun usingCollectorAddress(address: String) {
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun usingCrashCollectorAddress(address: String) {
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun withLoggingEnabled(enabled: Boolean) {
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun withLogLevel(level: Int) {
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun withApplicationFramework(
         applicationFramework: ApplicationFramework,
         frameworkVersion: String
@@ -360,18 +381,23 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         cocoapods.NewRelicAgent.NewRelic.enableCrashReporting(enabled)
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun withDistributedTraceListener(listener: TraceListener) {
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun withDeviceID(deviceId: String) {
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun isStarted() {
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun startMethodTrace(actionName: String) {
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun endMethodTrace() {
     }
 
@@ -383,6 +409,7 @@ actual class NewRelic internal constructor(val ios: cocoapods.NewRelicAgent.NewR
         TODO("Not yet implemented")
     }
 
+    @Suppress("EmptyFunctionBlock")
     actual fun setEventListener(eventListener: EventListener?) {
     }
 
